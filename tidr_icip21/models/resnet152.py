@@ -35,10 +35,10 @@ class RESNET152(torch.nn.Module):
     layers = []
     for ii, model in enumerate(self._features):
       x = model(x)
-      if(ii in internal):
+      if ii in internal:
         hit_cnt += 1
         layers.append(x)
-      if(hit_cnt==len(internal)):
+      if hit_cnt==len(internal):
         break
     return layers, pred
 

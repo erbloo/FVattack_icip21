@@ -9,6 +9,7 @@ import sys
 import torch
 from tqdm import tqdm
 
+from tidr_icip21.attacks.tidr import TIDR
 from tidr_icip21.utils import img_utils, imagenet_utils
 
 import pdb
@@ -24,12 +25,18 @@ ATTACKS_CFG = {
     "image_resize": 330,
     "dr_weight": 0.1,
     "random_start": False,
+  },
+  "pgd": {
+    "epsilon": 16/255.,
+    "k": 40,
+    "a": 2/255.,
   }
 }
 
 DR_LAYERS = {
   "vgg16": [12],
-  "resnet152": [5]
+  "resnet152": [5],
+  "inception_v3": [4]
 }
 
 
@@ -75,7 +82,10 @@ def generate_adv_example(args):
     img_path = os.path.join(args.input_dir, img_name)
     img_ori_var = img_utils.load_img(img_path).cuda()
     pred_ori = torch.argmax(source_model(img_ori_var)[1], axis=1)
-    img_adv_var = attacker(img_ori_var, pred_ori, internal=[12,14])
+    if isinstance(attacker, TIDR):
+      img_adv_var = attacker(img_ori_var, pred_ori, internal=DR_LAYERS[args.source_model])
+    else:
+      img_adv_var = attacker(img_ori_var, pred_ori)
     pred_adv = torch.argmax(source_model(img_adv_var.cuda())[1], axis=1)
     
     output_img = img_utils.save_img(img_adv_var, os.path.join(output_folder, img_name_noext + ".png"))
@@ -95,8 +105,8 @@ def generate_adv_example(args):
 
 def parse_args(args):
   parser = argparse.ArgumentParser(description="PyTorch AE generation.")
-  parser.add_argument('--source_model', choices=["vgg16", "resnet152"], default="vgg16", type=str)
-  parser.add_argument('--attack_method', choices=["tidr"], default="tidr", type=str)
+  parser.add_argument('--source_model', choices=["vgg16", "resnet152", "inception_v3"], default="vgg16", type=str)
+  parser.add_argument('--attack_method', choices=["tidr", "pgd"], default="tidr", type=str)
   parser.add_argument('--input_dir', default="sample_images/", type=str)
   parser.add_argument('--output_dir', default="outputs/", type=str)
   return parser.parse_args(args)

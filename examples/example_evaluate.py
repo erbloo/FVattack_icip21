@@ -36,6 +36,8 @@ def evaluate_adv_example(args):
     pred_benign = torch.argmax(model(img_benign_var), axis=1)
 
     img_path_adv = os.path.join(args.adv_dir, img_name_noext + ".png")
+    if not os.path.exists(img_path_adv):
+      continue
     img_adv_var = img_utils.load_img(img_path_adv).cuda()
     img_adv_var = torch_normalize(img_adv_var)
     pred_adv = torch.argmax(model(img_adv_var), axis=1)
