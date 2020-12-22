@@ -2,7 +2,7 @@
 
 INPUT_DIR=/home/yilan/yilan/workspace/datasets/icip21_images/imagenet_5000
 OUTPUT_DIR=/home/yilan/yilan/workspace/datasets/icip21_images
-ATTACK_METHOD=pgd
+ATTACK_METHOD=mifgsm
 
 for SOURCE_MODEL in vgg16 resnet152 inception_v3
 do

@@ -30,6 +30,12 @@ ATTACKS_CFG = {
     "epsilon": 16/255.,
     "k": 40,
     "a": 2/255.,
+  },
+  "mifgsm": {
+    "decay_factor": 1.0,
+    "epsilon": 16./255,
+    "steps": 40,
+    "step_size": 2./255
   }
 }
 
@@ -106,7 +112,7 @@ def generate_adv_example(args):
 def parse_args(args):
   parser = argparse.ArgumentParser(description="PyTorch AE generation.")
   parser.add_argument('--source_model', choices=["vgg16", "resnet152", "inception_v3"], default="vgg16", type=str)
-  parser.add_argument('--attack_method', choices=["tidr", "pgd"], default="tidr", type=str)
+  parser.add_argument('--attack_method', choices=["tidr", "pgd", "mifgsm"], default="tidr", type=str)
   parser.add_argument('--input_dir', default="sample_images/", type=str)
   parser.add_argument('--output_dir', default="outputs/", type=str)
   return parser.parse_args(args)

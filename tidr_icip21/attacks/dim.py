@@ -31,7 +31,7 @@ class DIM_Attack(object):
         Given examples (X_nat, y), returns adversarial
         examples within epsilon of X_nat in l_infinity norm.
         """
-        X_nat_np = X_nat.numpy()
+        X_nat_np = X_nat.detach().cpu().numpy()
         for p in self.model.parameters():
             p.requires_grad = False
         
