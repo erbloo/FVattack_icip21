@@ -20,7 +20,7 @@ ATTACKS_CFG = {
     "decay_factor": 1.0,
     "prob": 0.5,
     "epsilon": 16./255,
-    "steps": 40,
+    "steps": 100,
     "step_size": 2./255,
     "image_resize": 330,
     "dr_weight": 0.1,
@@ -54,9 +54,9 @@ def serialize_config(cfg_dict: dict) -> str:
     val = cfg_dict[key]
     if isinstance(val, float):
       val = "{0:.04f}".format(val)
-      curt_str = "{}_{}".format(key, val)
+    curt_str = "{}_{}".format(key, val)
     ret_str = ret_str + curt_str + "_"
-  ret_str.replace(".", 'p')
+  ret_str = ret_str.replace('.', 'p')
   return ret_str[:-1]
 
 
@@ -78,7 +78,7 @@ def generate_adv_example(args):
   attack_lib = importlib.import_module(
       os.path.join("tidr_icip21.attacks." + args.attack_method))
   attacker_class = getattr(attack_lib, args.attack_method.upper())
-  attacker = attacker_class(source_model)
+  attacker = attacker_class(source_model, attack_config=attack_config)
 
   img_names = os.listdir(args.input_dir)
   success_count = 0

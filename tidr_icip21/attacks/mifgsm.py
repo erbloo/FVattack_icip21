@@ -7,7 +7,7 @@ import pdb
 
 class MIFGSM(object):
   def __init__(self, model, decay_factor=1.0, epsilon=16./255, steps=40,
-               step_size=2./255, random_start=False):
+               step_size=2./255, random_start=False, attack_config=None):
     """
     The Momentum Iterative Fast Gradient Sign Method (Dong et al. 2017).
     This method won the first places in NIPS 2017 Non-targeted Adversarial

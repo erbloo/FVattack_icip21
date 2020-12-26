@@ -15,21 +15,32 @@ class TIDR(object):
                 decay_factor=1, prob=0.5,
                 epsilon=16./255, steps=40, step_size=2./255, 
                 image_resize=330, dr_weight=0.1,
-                random_start=False):
+                random_start=False, attack_config=None):
     """
     Paper link: https://arxiv.org/pdf/1803.06978.pdf
     """
-
-    self._epsilon = epsilon
-    self._steps = steps
-    self._step_size = step_size
-    self._rand = random_start
-    self._model = copy.deepcopy(model)
-    self._loss_fn = torch.nn.CrossEntropyLoss().cuda()
-    self._decay_factor = decay_factor
-    self._prob = prob
-    self._image_resize = image_resize
-    self._dr_weight = dr_weight
+    if attack_config == None:
+      self._epsilon = epsilon
+      self._steps = steps
+      self._step_size = step_size
+      self._rand = random_start
+      self._model = copy.deepcopy(model)
+      self._loss_fn = torch.nn.CrossEntropyLoss().cuda()
+      self._decay_factor = decay_factor
+      self._prob = prob
+      self._image_resize = image_resize
+      self._dr_weight = dr_weight
+    else:
+      self._epsilon = attack_config["epsilon"]
+      self._steps = attack_config["steps"]
+      self._step_size = attack_config["step_size"]
+      self._rand = attack_config["random_start"]
+      self._model = copy.deepcopy(model)
+      self._loss_fn = torch.nn.CrossEntropyLoss().cuda()
+      self._decay_factor = attack_config["decay_factor"]
+      self._prob = attack_config["prob"]
+      self._image_resize = attack_config["image_resize"]
+      self._dr_weight = attack_config["dr_weight"]
 
     kernel = self.gkern(15, 3).astype(np.float32)
     self._stack_kernel = np.stack([kernel, kernel, kernel])

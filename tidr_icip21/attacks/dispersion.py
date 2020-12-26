@@ -13,7 +13,7 @@ import pdb
 
 class DispersionAttack_gpu(object):
     """ Dispersion Reduction (DR) attack, using pytorch."""
-    def __init__(self, model, epsilon=16/255., step_size=0.004, steps=10):
+    def __init__(self, model, epsilon=16/255., step_size=2./255, steps=100):
         
         self.step_size = step_size
         self.epsilon = epsilon

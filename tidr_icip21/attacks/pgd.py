@@ -7,7 +7,7 @@ import pdb
 
 class PGD(object):
   def __init__(self, model, epsilon=16/255., k=40, a=2/255., 
-               random_start=False):
+               random_start=False, attack_config=None):
     """
     Attack parameter initialization. The attack performs k steps of
     size a, while always staying within epsilon from the initial

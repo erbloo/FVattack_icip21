@@ -27,7 +27,7 @@ def evaluate_adv_example(args):
   img_names = os.listdir(args.benign_dir)
   acc_count = 0
   total_count = 0
-  for img_name in tqdm(img_names):
+  for img_name in img_names:
     img_name_noext = os.path.splitext(img_name)[0]
 
     img_path_benign = os.path.join(args.benign_dir, img_name)

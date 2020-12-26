@@ -1,5 +1,8 @@
 outputs/
 tidr_icip21.egg-info/
+.vscode/
+temp*/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
