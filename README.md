@@ -1,4 +1,3 @@
 # FVattack_ICIP21
 
-### 5000 benign and baseline generated images from ImageNet.
-[https://github.com/wowowoxuan/imagesimagenet](https://github.com/wowowoxuan/imagesimagenet)
+### Code for ICIP21 submission: Fabricate-Vanish: An Effective and Transferable Black-box Adversarial Attack Incorporating Feature Distortion
